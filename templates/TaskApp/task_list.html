@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form method="get" action="{% url "taskapp:task_list" %}">
+
+    <h1 class="h3 mb-3 fw-normal" style="float:left;">
+        {% if completed == "2" %}
+        未完了タスク一覧
+        {% elif completed == "1" %}
+        完了タスク一覧
+        {% else %}
+        タスク一覧
+        {% endif %}
+    </h1>
+    <div style="float:right;">
+
+        <div class="dropdown" style="display:inline-block; margin-right:.5em;">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ソート
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="padding:1em 0">
+                <div class="dropdown-item">
+                    <label><input type="radio" name="date_sort" value="1" {% if date_sort == "1" %}checked{% endif %}> 期限：昇順</label><br>
+                    <label><input type="radio" name="date_sort" value="2" {% if date_sort == "2" %}checked{% endif %}> 期限：降順</label>
+                </div>
+
+            <div class="dropdown-item">
+                <label><input type="radio" name="date_sort" value="3" {% if date_sort == "3" %}checked{% endif %}> 更新日：昇順</label><br>
+                <label><input type="radio" name="date_sort" value="4" {% if date_sort == "4" %}checked{% endif %}> 更新日：降順</label>
+            </div>
+            <input type="submit" style="margin:.5em 1.25em" class="btn btn-secondary" value="ソートを実行">
+            
+        </div>
+        </div>
+
+        <div class="dropdown" style="display:inline-block;">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">絞り込み
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="padding:1em 0">
+            <div class="dropdown-item"><p>カテゴリー</p>
+                <label><input type="radio" name="category" value="all" {% if category == "all" %}checked{% endif %}> 全て</label><br>
+                <label><input type="radio" name="category" value="1" {% if category == "1" %}checked{% endif %}> 仕事 </label><br>
+                <label><input type="radio" name="category" value="2" {% if category == "2" %}checked{% endif %}> プライベート</label>
+            </div>
+
+            <div class="dropdown-divider"></div>
+
+            <div class="dropdown-item"><p>ステータス</p>
+                <label><input type="radio" name="completed" value="all" {% if completed == "all" %}checked{% endif %}> 全て</label><br>
+                <label><input type="radio" name="completed" value="1" {% if completed == "1" %}checked{% endif %}> 完了 </label><br>
+                <label><input type="radio" name="completed" value="2" {% if completed == "2" %}checked{% endif %}> 未完了</label>
+            </div>
+            <input type="submit" style="margin:.5em 1.25em" class="btn btn-secondary" value="絞り込みを実行">
+        </div>
+        
+        </div>
+    </div>
+
+<table class="table table-bordered" style="">
+    <thead class="thead-light">
+        <tr>
+            <th style="width:25%">タスク名</th>
+            <th style="width:14%">優先度</th>
+            <th style="width:16%">カテゴリー</th>
+            <th style="width:12%">期限</th>
+            <th style="width:12%">更新日</th>
+            <th style="width:14%">ステータス</th>
+            <th style="width:7%">詳細</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if object_list %}
+        {% for task in object_list %}
+        <tr>
+            <td>{{ task.task_name }}</td>
+            <td>{{ task.priority }}</td>
+            <td>{{ task.category }}</td>
+            <td>{{ task.due_date | date:'y/m/d' }}</td>
+            <td>{{ task.updated_at | date:'y/m/d' }}</td>
+            <td>
+                {% if task.is_completed %}
+                {{ task.completed_at | date:'y/m/d' }}<br> 完了
+                {% else %}
+                未完了
+                {% endif %}
+            </td>
+            <td ><a class="btn btn-primary" href="{% url "taskapp:task_detail" pk=task.id %}">詳細</a></td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <td colspan="7">タスクがありません</td>
+        {% endif %}
+    </tbody>
+</table>
+
+</from>
+
+{% endblock %}

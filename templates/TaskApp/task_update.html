@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form method="POST">
+{% csrf_token %} 
+<div style="max-width:500px; margin:auto">
+    {{created_at}}
+    <h1 class="h3 mb-3 fw-normal" style="float:left">タスク詳細</h1>
+    <div style="float:right">
+        <input type="submit" class="btn btn-primary" value="タスク更新">
+    </div>
+    <table class="table" style="">
+        <tbody>
+            <tr>
+                <th width="30%">タスク名</th><td>{{ form.task_name }}</label></td>
+            </tr>
+            <tr>
+                <th>タスク詳細</th><td>{{ form.task_detail }}</td>
+            </tr>
+            <tr>
+                <th>優先度</th><td>{{ form.priority }}</td>
+            </tr>
+            <tr>
+                <th>カテゴリー</th><td>{{ form.category }}</td>
+            </tr>
+            <tr>
+                <th>期限</th><td>{{ form.due_date }}</td>
+            </tr>
+            <tr>
+                <th>ステータス</th>
+                <td>{{ form.is_completed }} 完了</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</form>
+
+{% endblock content %}

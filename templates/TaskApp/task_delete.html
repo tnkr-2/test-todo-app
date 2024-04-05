@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="login-form">
+    <div class="text-center">
+        <p>「{{ object.task_name }}」を削除しますか？</p>
+        <form style="max-width:300px; margin:auto" action="" method="POST" class="d-flex">
+        {% csrf_token %}
+        <div class="form-group" style="width:100%; display:block;">
+        <a href="{% url "taskapp:task_detail" object.id %}" class="btn btn-primary" style="margin-right:.5em;">キャンセル</a>
+        <input type="submit" class="btn btn-danger" value="削除">
+        </div>
+    </form>
+    </div>
+</div>
+{% endblock %}
