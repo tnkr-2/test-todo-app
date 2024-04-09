@@ -9,9 +9,10 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-from django.core.management.utils import get_random_secret_key
+
 from pathlib import Path
 import os
+from django.core.management.utils import get_random_secret_key
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +28,7 @@ SECRET_KEY = 'django-insecure-uz+_e$q-(o9jng4orfr$&ao948r-4np4pgw%a$qbf(syh9@_1_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '.pythonanywhere.com', 'tnkr.pythonanywhere.com']
+ALLOWED_HOSTS = ["127.0.0.1", 'localhost', '.pythonanywhere.com', 'tnkr.pythonanywhere.com']
 
 
 # Application definition
@@ -41,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "UserApp",
     "TaskApp",
-    "bootstrap4",
 ]
 
 AUTH_USER_MODEL = "UserApp.CustomUser"
@@ -137,7 +137,4 @@ LOGOUT_REDIRECT_URL = "../../taskapp/"
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
 SECRET_KEY = get_random_secret_key()
